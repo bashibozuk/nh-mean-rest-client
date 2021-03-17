@@ -1,0 +1,24 @@
+<h2>{{title}}</h2>
+<div>
+    <mat-form-field appearance="standard">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Search Articles">
+      </mat-form-field>
+    <button mat-button color="primary">Filter</button>
+</div>
+<div>
+
+    <mat-card *ngFor="let article of articles">
+        <mat-card-header>
+            <mat-card-title>{{article.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            {{article.text |cutText:200}}
+        </mat-card-content>
+        <mat-card-actions>
+            <a mat-button routerLink="/edit-article/:id" [params]="{id:article._id }" *ngIf="allowEdit">Edit</a>
+            <a mat-button>Delete</a>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

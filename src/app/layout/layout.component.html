@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#" routerLink="/articles">All</a>
+      <a mat-list-item href="#" routerLink="/articles"  [queryParams]="{order: 'createdAt'}">Newest</a>
+      <a mat-list-item href="#"routerLink="/articles"  [queryParams]="{order: 'visits'}">Most visited</a>
+      <mat-divider></mat-divider>
+      <h3 matSubheader>Authors</h3>
+      <a *ngFor="let author of authors" 
+        mat-list-item href="#" routerLink="/articles" [queryParams]="{author_id: author._id}">{{author.name}}</a>
+      <mat-divider></mat-divider>
+        <h3 matSubheader>Categories</h3>
+        <a *ngFor="let category of categories" 
+          mat-list-item href="#" routerLink="/articles" [queryParams]="{category_id: category._id}">{{category.name}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Day4</span>
+      <div>
+          <a *ngIf="!user" routerLink="/login">Login</a>
+          <span *ngIf="user" >Logged as {{user.name}}({{user.email}})</span>
+          {{user|json}}
+      </div>
+    </mat-toolbar>
+
+
+    <!-- Add Content Here -->
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
